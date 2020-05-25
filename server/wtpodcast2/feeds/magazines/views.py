@@ -14,8 +14,11 @@ def get_feed(request):
     fg.description("Combined Feed of Watchtower (public), Watchtower (study), and Awake! in English from jw.org.")
     fg.link(href=request.build_absolute_uri(), rel='self')
     # Include all issues
-    for issue in Issue.objects.filter(audio_file__isnull=False).all():
-        audio_url = request.build_absolute_uri(issue.audio_file.url)
+    for issue in Issue.objects.all():
+        try:
+            audio_url = request.build_absolute_uri(issue.audio_file.url)
+        except ValueError:
+            continue
         fe = fg.add_entry()
         fe.id(audio_url)
         fe.title(issue.name)
