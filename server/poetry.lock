@@ -288,6 +288,17 @@ secure = ["certifi", "cryptography (>=1.3.4)", "idna (>=2.0.0)", "pyOpenSSL (>=0
 socks = ["PySocks (>=1.5.6,<1.5.7 || >1.5.7,<2.0)"]
 
 [[package]]
+category = "main"
+description = "Radically simplified static file serving for WSGI applications"
+name = "whitenoise"
+optional = false
+python-versions = ">=3.5, <4"
+version = "5.1.0"
+
+[package.extras]
+brotli = ["brotli"]
+
+[[package]]
 category = "dev"
 description = "Backport of pathlib-compatible object wrapper for zip files"
 marker = "python_version < \"3.8\""
@@ -301,7 +312,7 @@ docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
 testing = ["jaraco.itertools", "func-timeout"]
 
 [metadata]
-content-hash = "af95239b18411e3f053b543eb4d720e8a558539b7bb8efc551bbea0a4b205335"
+content-hash = "678b9dfbe0a836b073d700fe93c14ad25dbb1f80b220c171fa4d8a555d716168"
 python-versions = "^3.7"
 
 [metadata.files]
@@ -455,6 +466,10 @@ sqlparse = [
 urllib3 = [
     {file = "urllib3-1.25.9-py2.py3-none-any.whl", hash = "sha256:88206b0eb87e6d677d424843ac5209e3fb9d0190d0ee169599165ec25e9d9115"},
     {file = "urllib3-1.25.9.tar.gz", hash = "sha256:3018294ebefce6572a474f0604c2021e33b3fd8006ecd11d62107a5d2a963527"},
+]
+whitenoise = [
+    {file = "whitenoise-5.1.0-py2.py3-none-any.whl", hash = "sha256:6dd26bfda3af29177d8ab7333a0c7b7642eb615ce83764f4d15a9aecda3201c4"},
+    {file = "whitenoise-5.1.0.tar.gz", hash = "sha256:60154b976a13901414a25b0273a841145f77eb34a141f9ae032a0ace3e4d5b27"},
 ]
 zipp = [
     {file = "zipp-3.1.0-py3-none-any.whl", hash = "sha256:aa36550ff0c0b7ef7fa639055d797116ee891440eac1a56f378e2d3179e0320b"},
