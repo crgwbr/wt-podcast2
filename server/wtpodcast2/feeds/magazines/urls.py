@@ -4,6 +4,5 @@ from . import views
 
 app_name = 'magazines'
 urlpatterns = [
-    path('feed.atom', views.feed_atom, name='feed_atom'),
-    path('feed.rss', views.feed_atom, name='feed_rss'),
+    path('feed.rss', views.feed_rss, name='feed_rss'),
 ]

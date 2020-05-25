@@ -8,10 +8,10 @@ from .models import Article
 
 def get_feed(request):
     fg = FeedGenerator()
-    fg.id(request.build_absolute_uri())
     fg.load_extension('podcast')
     fg.podcast.itunes_category('Religion & Spirituality', 'Christianity')
     fg.podcast.itunes_image(request.build_absolute_uri(static('whatsnew/icon.png')))
+    # fg.id(request.build_absolute_uri())
     fg.title("JW.ORG - What's New")
     fg.description("See what has been recently added to jw.org, the official website of Jehovah's Witnesses.")
     fg.link(href=request.build_absolute_uri(), rel='self')
@@ -33,11 +33,6 @@ def get_feed(request):
     return fg
 
 
-def feed_atom(request):
-    fg = get_feed(request)
-    return HttpResponse(fg.atom_str(pretty=True), content_type='application/atom+xml')
-
-
 def feed_rss(request):
     fg = get_feed(request)
-    return HttpResponse(fg.rss_str(pretty=True), content_type='application/rss+xml')
+    return HttpResponse(fg.rss_str(pretty=False), content_type='application/rss+xml')

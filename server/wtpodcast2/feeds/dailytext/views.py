@@ -29,11 +29,6 @@ def get_feed(request):
     return fg
 
 
-def feed_atom(request):
-    fg = get_feed(request)
-    return HttpResponse(fg.atom_str(pretty=True), content_type='application/atom+xml')
-
-
 def feed_rss(request):
     fg = get_feed(request)
     return HttpResponse(fg.rss_str(pretty=True), content_type='application/rss+xml')

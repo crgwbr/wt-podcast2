@@ -14,7 +14,7 @@ def get_feed(request):
     fg.description("Combined Feed of Watchtower (public), Watchtower (study), and Awake! in English from jw.org.")
     fg.link(href=request.build_absolute_uri(), rel='self')
     # Include all issues
-    for issue in Issue.objects.all():
+    for issue in Issue.objects.filter(audio_file__isnull=False).all():
         audio_url = request.build_absolute_uri(issue.audio_file.url)
         fe = fg.add_entry()
         fe.id(audio_url)
@@ -25,11 +25,6 @@ def get_feed(request):
         fe.enclosure(audio_url, str(issue.audio_file_duration), 'audio/mpeg')
         fe.link(href=audio_url, type='audio/mpeg')
     return fg
-
-
-def feed_atom(request):
-    fg = get_feed(request)
-    return HttpResponse(fg.atom_str(pretty=True), content_type='application/atom+xml')
 
 
 def feed_rss(request):
