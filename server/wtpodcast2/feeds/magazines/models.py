@@ -96,6 +96,7 @@ class Issue(models.Model):
             return
         resp.raw.decode_content = True
         self.cover_image.save(name=os.path.basename(cover_url), content=resp.raw)
+        self.save()
 
 
     def save_article(self, data):
@@ -203,6 +204,7 @@ class Article(models.Model):
             return
         resp.raw.decode_content = True
         self.audio_file.save(name=os.path.basename(self.audio_file_link), content=resp.raw)
+        self.save()
 
 
     def __str__(self):

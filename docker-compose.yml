@@ -29,4 +29,4 @@ services:
     ports:
       - "7001:80"
     volumes:
-      - media:/usr/share/nginx/html:ro
+      - media:/usr/share/nginx/html/media:ro
