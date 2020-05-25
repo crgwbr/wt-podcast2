@@ -38,7 +38,10 @@ class Issue(models.Model):
         issue_dates = (m.strftime('%Y%m') for m in months)
         for issue_date in issue_dates:
             for pub in pubs:
-                cls.import_issue(pub, issue_date)
+                try:
+                    cls.import_issue(pub, issue_date)
+                except Exception as e:
+                    print(e)
 
 
     @classmethod
@@ -97,8 +100,9 @@ class Issue(models.Model):
 
     def save_article(self, data):
         article = Article.objects.filter(issue=self, track=data['track']).first()
-        if article is None:
-            article = Article(issue=self, track=data['track'])
+        if article is not None:
+            return
+        article = Article(issue=self, track=data['track'])
         article.mid = data['docid']
         article.title = data['title']
         modified = parse_date(data['file']['modifiedDatetime']).replace(tzinfo=pytz.UTC)
@@ -192,8 +196,6 @@ class Article(models.Model):
 
 
     def download_audio(self):
-        if self.audio_file is not None:
-            return
         try:
             resp = requests.get(self.audio_file_link, stream=True)
             resp.raise_for_status()
