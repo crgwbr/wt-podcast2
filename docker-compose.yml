@@ -1,0 +1,30 @@
+version: '3.4'
+
+volumes:
+  sqlite:
+    driver: local
+    external: false
+  media:
+    driver: local
+    external: false
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: gunicorn -w 4 -b 0.0.0.0:7000 wtpodcast2.wsgi:application
+    ports:
+      - "7000:7000"
+    volumes:
+      - sqlite:/code/db
+      - media:/code/public/media
+    environment:
+      DEBUG: 'no'
+
+  nginx:
+    image: nginx
+    ports:
+      - "7001:80"
+    volumes:
+      - media:/usr/share/nginx/html:ro
