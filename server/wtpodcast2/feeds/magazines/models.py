@@ -64,8 +64,9 @@ class Issue(models.Model):
         data = resp.json()
         # Set basic issue info
         issue = cls.objects.filter(pub=pub, issue_date=issue_date).first()
-        if issue is None:
-            issue = cls(pub=pub, issue_date=issue_date)
+        if issue is not None:
+            return
+        issue = cls(pub=pub, issue_date=issue_date)
         issue.pub_name = data['pubName']
         issue.formatted_issue_date = data['formattedDate']
         issue.save()
@@ -117,8 +118,6 @@ class Issue(models.Model):
 
 
     def create_combined_audio(self):
-        if self.audio_file:
-            return
         # Combine MP3 files into a single file
         combined = AudioSegment.empty()
         chapters = []
@@ -134,12 +133,15 @@ class Issue(models.Model):
             combined.export(fp.name, format='mp3', bitrate="128k")
             id3 = eyed3.load(fp.name)
             # Extract the cover image from the first article MP3
-            first_article_path = os.path.abspath(os.path.join(settings.MEDIA_ROOT, self.articles.first().audio_file.name))
-            cover_id3 = eyed3.load(first_article_path)
-            if cover_id3 is not None:
-                cover_img_frame = cover_id3.tag.images.get('')
-                # Set cover image on combined file
-                id3.tag.images._fs[b'APIC'] = cover_img_frame
+            try:
+                first_article_path = os.path.abspath(os.path.join(settings.MEDIA_ROOT, self.articles.first().audio_file.name))
+                cover_id3 = eyed3.load(first_article_path)
+                if cover_id3 is not None:
+                    cover_img_frame = cover_id3.tag.images.get('')
+                    # Set cover image on combined file
+                    id3.tag.images._fs[b'APIC'] = cover_img_frame
+            except Exception as e:
+                print(e)
             # Add chapter markers to the combined file
             index = 0
             child_ids = []
