@@ -63,7 +63,7 @@ class DailyTextEntry(models.Model):
         entry.save()
         # Get audio data
         try:
-            resp = requests.get('https://apps.jw.org/GETPUBMEDIALINKS', params={
+            resp = requests.get('https://b.jw-cdn.org/apis/pub-media/GETPUBMEDIALINKS', params={
                 'pub': 'nwt',
                 'booknum': entry.book_num,
                 'track': entry.chapter_num,

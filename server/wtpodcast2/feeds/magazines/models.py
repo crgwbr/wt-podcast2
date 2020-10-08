@@ -49,7 +49,7 @@ class Issue(models.Model):
         language = 'E'
         fileformat = 'MP3'
         try:
-            resp = requests.get('https://apps.jw.org/GETPUBMEDIALINKS', params={
+            resp = requests.get('https://b.jw-cdn.org/apis/pub-media/GETPUBMEDIALINKS', params={
                 'pub': pub,
                 'issue': issue_date,
                 'output': 'json',

@@ -69,7 +69,7 @@ class Article(models.Model):
         if not self.mid:
             return
         try:
-            resp = requests.get('https://apps.jw.org/GETPUBMEDIALINKS', params={
+            resp = requests.get('https://b.jw-cdn.org/apis/pub-media/GETPUBMEDIALINKS', params={
                 'docid': self.mid,
                 'output': 'json',
                 'fileformat': 'MP3',
